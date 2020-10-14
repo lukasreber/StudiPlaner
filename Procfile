@@ -1,1 +1,1 @@
-web: gunicorn StudiPlaner.wsgi:application
+web: gunicorn StudiPlaner.wsgi —-log-file -

@@ -32,7 +32,7 @@ SECRET_KEY = '3&d=ln)titax5b0l0jc$%vq2+l^0=13eb(5z16i&fyv5#hp(p_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['studiplaner.herokuapp.com']
 
 
 # Application definition

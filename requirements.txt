@@ -13,3 +13,4 @@ sqlparse==0.4.1
 toml==0.10.1
 gunicorn
 whitenoise
+django_heroku

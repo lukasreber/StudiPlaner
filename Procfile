@@ -1,1 +1,1 @@
-web: gunicorn --chdir StudiPlaner StudiPlaner.wsgi —-log-file -
+web: gunicorn StudiPlaner.wsgi —-log-file -

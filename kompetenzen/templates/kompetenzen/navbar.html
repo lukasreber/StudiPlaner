@@ -18,19 +18,19 @@
           <div class="sidebar-sticky pt-3">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="{% url 'home' %}">
+                <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">
                   <span data-feather="home"></span>
                   Dashboard
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'courses' %}">
+                <a class="nav-link {% if request.path == '/kompetenzen/' %}active{% endif %}" href="{% url 'courses' %}">
                   <span data-feather="layers"></span>
                   Kompetenzen
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">
+                <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">
                   <span data-feather="info"></span>
                   Info
                 </a>

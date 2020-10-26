@@ -12,8 +12,8 @@
         <p>Willst du die Kompetenz {{co}} wirklich löschen?</p>
         <form action="{% url 'coursedelete' co.id %}" method="POST">
             {% csrf_token %}
-            <a href="{% url 'home' %}">Abbrechen</a>
-            <input type="submit" name="Confirm">
+            <a class="btn btn-warning" href="{% url 'home' %}">Abbrechen</a>
+            <input class="btn btn-danger" type="submit" name="Confirm">
         </form>
     </div>
   </main>

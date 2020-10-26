@@ -13,9 +13,9 @@
           <h5 class="card-header">Übersicht</h5>
           <div class="card-body">
             <h7 class="card-text">
-              Total Anzahl Kompetenzen<br />
-              Total Kompetenzgruppen:<br/>
-              Total mögliche Credits: <b>{{totalcredits}}</b><br/>
+              Total Anzahl Kompetenzen <b>{{totalcourses}}</b><br />
+              Total Kompetenzgruppen <b>{{totalcoursegroups}}</b><br/>
+              Total mögliche Credits <b>{{totalcredits}}</b><br/>
             </p>
           </div>
         </div>
@@ -26,26 +26,26 @@
           <h5 class="card-header">Fortschritt</h5>
           <div class="card-body">
             <p class="card-text">
-              Total abgeschlossene Kompetenzen <b>{{done}}</b>
+              Total abgeschlossene Kompetenzen <b>{{coursesdone}}{{perccoursesdone}}</b>
               <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: {{done}}%" aria-valuenow="{{done}}" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" style="width: {{perccoursesdone}}%" aria-valuenow="{{done}}" aria-valuemin="0" aria-valuemax="{{totalcourses}}"></div>
               </div>
             </p>
             <p class="card-text">
               Total erreichte Credits <b></b>
               <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </p>
               <p class="card-text">Credits im HS19
               <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </p>
             <p class="card-text">
               Credits im HS19
               <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </p>
           </div>
@@ -59,7 +59,7 @@
           <h5 class="card-header">Kompetenzgruppen</h5>
           <div class="card-body">
             <h7 class="card-text">
-              {% for i in group %}
+              {% for i in groups %}
               <p class="card-text">
                 {{i.name}}
                 <div class="progress">

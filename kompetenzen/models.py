@@ -23,6 +23,7 @@ class course_type(models.Model):
 
 class course(models.Model):
     SEMESTER = (
+        ('n/a', 'n/a'),
         ('HS19', 'HS19'),
         ('FS20', 'FS20'),
         ('HS20', 'HS20'),
@@ -41,6 +42,7 @@ class course(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     done = models.BooleanField(default=False)
     signed_up = models.CharField(max_length=10, null=True, choices=SEMESTER)
+    link = models.CharField(max_length=300, null=True)
     def __str__(self):
         return self.name
 

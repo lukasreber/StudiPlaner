@@ -5,11 +5,22 @@ from .forms import CourseInsertForm
 from django.db.models import Sum
 
 def home(request):
-     #cosum = course.objects.all().annotate(Sum('credits'))
      totalcredits = course.objects.aggregate(sumcredits=Sum('credits'))['sumcredits']
-     done = course.objects.filter(done=True).count()
-     group = course_group.objects.all()
-     context = {'totalcredits':totalcredits, 'done':done, 'group':group}
+     totalcourses = course.objects.count()
+     totalcoursegroups = course_group.objects.count()
+     coursesdone = course.objects.filter(done=True).count()
+
+     perccoursesdone = (coursesdone / totalcourses * 100)
+
+     groups = course_group.objects.all()
+     context = {
+          'totalcoursegroups':totalcoursegroups,
+          'totalcourses':totalcourses,
+          'totalcredits':totalcredits,
+          'coursesdone':coursesdone,
+          'perccoursesdone':perccoursesdone,
+          'groups':groups
+          }
      return render(request, 'kompetenzen/dashboard.html', context)
 
 def kompetenzen(request):

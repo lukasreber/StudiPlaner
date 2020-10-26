@@ -13,9 +13,19 @@
           <h5 class="card-header">Übersicht</h5>
           <div class="card-body">
             <h7 class="card-text">
-              Total Anzahl Kompetenzen <b>{{totalcourses}}</b><br />
-              Total Kompetenzgruppen <b>{{totalcoursegroups}}</b><br/>
-              Total mögliche Credits <b>{{totalcredits}}</b><br/>
+              <table class="table table-borderless text-center">
+                <tr>
+                  <td><h2 class="display-2">{{totalcourses}}</h2></td>
+                  <td><h2 class="display-2">{{totalcoursegroups}}</h2></td>
+                  <td><h2 class="display-2">{{totalcredits}}</h2></td>
+                </tr>
+                <tr>
+                  <td>Kompetenzen</td>
+                  <td>Kompetenzgruppen</td>
+                  <td>Total Credits</td>
+                </tr>
+                
+              </table>
             </p>
           </div>
         </div>
@@ -26,7 +36,7 @@
           <h5 class="card-header">Fortschritt</h5>
           <div class="card-body">
             <p class="card-text">
-              Total abgeschlossene Kompetenzen <b>{{coursesdone}}{{perccoursesdone}}</b>
+              Total abgeschlossene Kompetenzen <b>{{coursesdone}}</b>
               <div class="progress">
                 <div class="progress-bar" role="progressbar" style="width: {{perccoursesdone}}%" aria-valuenow="{{done}}" aria-valuemin="0" aria-valuemax="{{totalcourses}}"></div>
               </div>
@@ -38,12 +48,6 @@
               </div>
             </p>
               <p class="card-text">Credits im HS19
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </p>
-            <p class="card-text">
-              Credits im HS19
               <div class="progress">
                 <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
               </div>

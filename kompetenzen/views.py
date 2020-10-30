@@ -9,17 +9,36 @@ def home(request):
      totalcourses = course.objects.count()
      totalcoursegroups = course_group.objects.count()
      coursesdone = course.objects.filter(done=True).count()
-
+     creditsdone = course.objects.filter(done=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
+     signedupcurrentsem = course.objects.filter(signed_up='HS20').aggregate(sumcredits=Sum('credits'))['sumcredits']
      perccoursesdone = (coursesdone / totalcourses * 100)
 
      groups = course_group.objects.all()
+
+     # getting all information for "Kompetenzgruppen"
+     dic = {}
+
+     for group in groups:
+          gn = group.name
+          # completed credits
+          c = course.objects.filter(group__name=gn,done=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
+          # max credits
+          m = course_group.objects.values('maxcredits').get(name=gn)['maxcredits']
+          
+          # adding values to dictionary
+          dic[gn] = {'credits':c,'max':m}
+     
      context = {
           'totalcoursegroups':totalcoursegroups,
           'totalcourses':totalcourses,
           'totalcredits':totalcredits,
           'coursesdone':coursesdone,
+          'creditsdone':creditsdone,
           'perccoursesdone':perccoursesdone,
-          'groups':groups
+          'signedupcurrentsem':signedupcurrentsem,
+          'groups':groups,
+          'dic':dic
+
           }
      return render(request, 'kompetenzen/dashboard.html', context)
 

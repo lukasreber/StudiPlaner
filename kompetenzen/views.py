@@ -11,22 +11,26 @@ def home(request):
      coursesdone = course.objects.filter(done=True).count()
      creditsdone = course.objects.filter(done=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
      signedupcurrentsem = course.objects.filter(signed_up='HS20').aggregate(sumcredits=Sum('credits'))['sumcredits']
-     perccoursesdone = (coursesdone / totalcourses * 100)
+     perccoursesdone = int((coursesdone / totalcourses * 100))
 
      groups = course_group.objects.all()
 
      # getting all information for "Kompetenzgruppen"
      dic = {}
-
      for group in groups:
           gn = group.name
           # completed credits
           c = course.objects.filter(group__name=gn,done=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
-          # max credits
-          m = course_group.objects.values('maxcredits').get(name=gn)['maxcredits']
+          # percentage done and min percentage left
+          if type(c) != int:
+               pd = 0
+               pl = group.mincredits/group.maxcredits*100
+          else:
+               pd = c/group.maxcredits*100
+               pl = (group.mincredits-c)/group.maxcredits*100
           
           # adding values to dictionary
-          dic[gn] = {'credits':c,'max':m}
+          dic[gn] = {'credits':c,'max':group.maxcredits,'min':group.mincredits,'percentdone':pd,'percentleft':pl}
      
      context = {
           'totalcoursegroups':totalcoursegroups,

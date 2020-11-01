@@ -41,16 +41,29 @@
         <h5 class="card-header">Fortschritt</h5>
         <div class="card-body">
           <p class="card-text">
-            Total abgeschlossene Kompetenzen <b>{{coursesdone}}</b>
-          <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: {{perccoursesdone}}%" aria-valuenow="{{done}}"
-              aria-valuemin="0" aria-valuemax="{{totalcourses}}">{{perccoursesdone}}%</div>
-          </div>
-          </p>
-          <p class="card-text">
-            Total erreichte Credits <b>{{creditsdone}}</b>
-          </p>
-          <p class="card-text">Eingeschriebene Credits im aktuellen Semester <b>{{signedupcurrentsem}}</b>
+            <table class="table">
+              <thead class="table-light">
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Kompetenzen</th>
+                  <th scope="col">Credits</th>
+              </tr>
+            </thead>
+              <tr>
+                <td><p class="h6"><span class="badge badge-success">Abgeschlossen</span></p></td>
+                <td>{{coursesdone}}</td>
+                <td>{{creditsdone}}</td>
+              </tr>
+              <tr>
+                <td><p class="h6"><span class="badge badge-primary">Eingeschrieben</span></p></td>
+                <td>{{signedup}}</td>
+                <td>{{creditssignedup}}</td>
+              </tr>
+            </table><br>
+          <div class="progress" style="height:30px">
+            <div class="progress-bar bg-success" role="progressbar" style="width: {{perccoursesdone}}%">{{perccoursesdone}}%</div>
+            <div class="progress-bar bg-primary" role="progressbar" style="width: {{persignedup}}%">{{persignedup}}%</div>
+          </div><br>
           </p>
         </div>
       </div>

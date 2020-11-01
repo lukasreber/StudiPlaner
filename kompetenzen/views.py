@@ -10,8 +10,10 @@ def home(request):
      totalcoursegroups = course_group.objects.count()
      coursesdone = course.objects.filter(done=True).count()
      creditsdone = course.objects.filter(done=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
-     signedupcurrentsem = course.objects.filter(semester__current=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
-     perccoursesdone = int((coursesdone / totalcourses * 100))
+     signedup = course.objects.filter(semester__current=True).count()
+     creditssignedup = course.objects.filter(semester__current=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
+     perdone = int((coursesdone / totalcourses * 100))
+     persignedup = int((signedup / totalcourses * 100))
 
      groups = course_group.objects.all()
 
@@ -38,8 +40,10 @@ def home(request):
           'totalcredits':totalcredits,
           'coursesdone':coursesdone,
           'creditsdone':creditsdone,
-          'perccoursesdone':perccoursesdone,
-          'signedupcurrentsem':signedupcurrentsem,
+          'perccoursesdone':perdone,
+          'persignedup':persignedup,
+          'creditssignedup':creditssignedup,
+          'signedup':signedup,
           'groups':groups,
           'dic':dic
 
@@ -89,3 +93,43 @@ def coursedelete(request, pk):
 
 def about(request):
      return render(request, 'kompetenzen/about.html')
+
+def report(request, name):
+     if name == "current":
+          co = course.objects.filter(semester__current=True)
+          so = course_semester.objects.get(current=True)
+          bo = course.objects.filter(semester__current=True,type__name='Basismodul').count()
+          bosum = course.objects.filter(semester__current=True,type__name='Basismodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+          po = course.objects.filter(semester__current=True,type__name='Portfoliomodul').count()
+          posum = course.objects.filter(semester__current=True,type__name='Portfoliomodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+     elif name == "last":
+          co = course.objects.filter(semester__previous=True)
+          so = course_semester.objects.get(previous=True)
+          bo = course.objects.filter(semester__current=True,type__name='Basismodul').count()
+          bosum = course.objects.filter(semester__current=True,type__name='Basismodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+          po = course.objects.filter(semester__current=True,type__name='Portfoliomodul').count()
+          posum = course.objects.filter(semester__current=True,type__name='Portfoliomodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+     else:
+          co = course.objects.all()
+          so = course_semester.objects.all()
+          bo = course.objects.filter(semester__current=True,type__name='Basismodul').count()
+          bosum = course.objects.filter(semester__current=True,type__name='Basismodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+          po = course.objects.filter(semester__current=True,type__name='Portfoliomodul').count()
+          posum = course.objects.filter(semester__current=True,type__name='Portfoliomodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+
+     coursetotal = 0
+     creditstotal = 0
+     for c in co:
+          coursetotal += 1
+          creditstotal += c.credits
+
+     context = {'course':co,
+               'semester':so,
+               'coursetotal':coursetotal,
+               'creditstotal':creditstotal,
+               'bo':bo,
+               'bosum':bosum,
+               'po':po,
+               'posum':posum
+               }
+     return render(request, 'kompetenzen/report.html', context)

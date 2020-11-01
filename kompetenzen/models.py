@@ -21,18 +21,22 @@ class course_type(models.Model):
     def __str__(self):
         return self.name
 
+class course_semester(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, null=True)
+    shortname = models.CharField(max_length=4, null=True)
+    start = models.DateField(null=True)
+    end = models.DateField(null=True)
+    current = models.BooleanField(default=False)
+    previous = models.BooleanField(default=False)
+    start_exam = models.DateField(null=True)
+    end_exam = models.DateField(null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
 class course(models.Model):
-    SEMESTER = (
-        ('n/a', 'n/a'),
-        ('HS19', 'HS19'),
-        ('FS20', 'FS20'),
-        ('HS20', 'HS20'),
-        ('FS21', 'FS21'),
-        ('HS21', 'HS21'),
-        ('FS22', 'FS22'),
-        ('HS22', 'HS22'),
-        ('FS23', 'FS23'),
-    )
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200, null=True)
     shortname = models.CharField(max_length=10, null=True)
@@ -41,8 +45,9 @@ class course(models.Model):
     credits = models.IntegerField(null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     done = models.BooleanField(default=False)
-    signed_up = models.CharField(max_length=10, null=True, choices=SEMESTER)
+    semester = models.ForeignKey(course_semester, null=True, on_delete=models.SET_NULL, blank=True)
     link = models.CharField(max_length=300, null=True)
+
     def __str__(self):
         return self.name
 

@@ -7,3 +7,4 @@ from .models import *
 admin.site.register(course)
 admin.site.register(course_group)
 admin.site.register(course_type)
+admin.site.register(course_semester)

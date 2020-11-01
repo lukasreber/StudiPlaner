@@ -10,7 +10,7 @@ def home(request):
      totalcoursegroups = course_group.objects.count()
      coursesdone = course.objects.filter(done=True).count()
      creditsdone = course.objects.filter(done=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
-     signedupcurrentsem = course.objects.filter(signed_up='HS20').aggregate(sumcredits=Sum('credits'))['sumcredits']
+     signedupcurrentsem = course.objects.filter(semester__current=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
      perccoursesdone = int((coursesdone / totalcourses * 100))
 
      groups = course_group.objects.all()

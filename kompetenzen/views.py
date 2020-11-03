@@ -5,11 +5,12 @@ from .forms import CourseInsertForm
 from django.db.models import Sum
 
 def home(request):
-     totalcredits = course.objects.aggregate(sumcredits=Sum('credits'))['sumcredits']
-     totalcourses = course.objects.count()
+     courses = course.objects.all()
+     totalcredits = sum(d['credits'] for d in courses.values())
+     totalcourses = len(courses)
      totalcoursegroups = course_group.objects.count()
      coursesdone = course.objects.filter(done=True).count()
-     creditsdone = course.objects.filter(done=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
+     creditsdone = sum(d['credits'] for d in courses.values() if d['done']==True)
      signedup = course.objects.filter(semester__current=True).count()
      creditssignedup = course.objects.filter(semester__current=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
      perdone = int((coursesdone / totalcourses * 100))

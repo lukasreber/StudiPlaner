@@ -33,7 +33,7 @@ SECRET_KEY = '3&d=ln)titax5b0l0jc$%vq2+l^0=13eb(5z16i&fyv5#hp(p_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['studiplaner.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','studiplaner.herokuapp.com']
 
 
 # Application definition
@@ -130,11 +130,3 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
-# Configure Django App for Heroku.
-
-django_heroku.settings(locals())

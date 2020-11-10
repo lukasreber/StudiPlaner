@@ -4,21 +4,26 @@ from .models import *
 from .forms import CourseInsertForm
 from django.db.models import Sum
 
-def home(request):
-     courses = course.objects.all()
-     totalcredits = sum(d['credits'] for d in courses.values())
-     totalcourses = len(courses)
-     totalcoursegroups = course_group.objects.count()
-     coursesdone = course.objects.filter(done=True).count()
-     creditsdone = sum(d['credits'] for d in courses.values() if d['done']==True)
-     signedup = course.objects.filter(semester__current=True).count()
-     creditssignedup = course.objects.filter(semester__current=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
-     perdone = int((coursesdone / totalcourses * 100))
-     persignedup = int((signedup / totalcourses * 100))
+def percent(n,m):
+     if n and m:
+          return n/m*100
+     else:
+          return 0
 
-     groups = course_group.objects.all()
+def home(request):
+     courses             = course.objects.all()
+     totalcredits        = sum(d['credits'] for d in courses.values())
+     totalcourses        = len(courses)
+     totalcoursegroups   = course_group.objects.count()
+     coursesdone         = course.objects.filter(done=True).count()
+     creditsdone         = sum(d['credits'] for d in courses.values() if d['done']==True)
+     signedup            = course.objects.filter(semester__current=True).count()
+     creditssignedup     = course.objects.filter(semester__current=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
+     perdone             = percent(coursesdone,totalcourses)
+     persignedup         = percent(signedup,totalcourses)
 
      # getting all information for "Kompetenzgruppen"
+     groups = course_group.objects.all()
      dic = {}
      for group in groups:
           gn = group.name
@@ -27,10 +32,10 @@ def home(request):
           # percentage done and min percentage left
           if type(c) != int:
                pd = 0
-               pl = group.mincredits/group.maxcredits*100
+               pl = percent(group.mincredits,group.maxcredits)
           else:
                pd = c/group.maxcredits*100
-               pl = (group.mincredits-c)/group.maxcredits*100
+               pl = percent(group.mincredits-c,group.maxcredits)
           
           # adding values to dictionary
           dic[gn] = {'credits':c,'max':group.maxcredits,'min':group.mincredits,'percentdone':pd,'percentleft':pl}

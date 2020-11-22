@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
-from .forms import CourseInsertForm
+from .forms import CourseForm
 from django.db.models import Sum
 
 def percent(n,m):
@@ -66,9 +66,9 @@ def coursedetail(request, pk):
      return render(request, 'kompetenzen/course.html', context)
 
 def courseinsert(request):
-     form = CourseInsertForm()
+     form = CourseForm()
      if request.method == 'POST':
-          form = CourseInsertForm(request.POST)
+          form = CourseForm(request.POST)
           if form.is_valid():
                form.save()
                return redirect('/kompetenzen')
@@ -78,10 +78,10 @@ def courseinsert(request):
 
 def courseupdate(request, pk):
      co = course.objects.get(id=pk)
-     form = CourseInsertForm(instance=co)
+     form = CourseForm(instance=co)
 
      if request.method == 'POST':
-          form = CourseInsertForm(request.POST, instance=co)
+          form = CourseForm(request.POST, instance=co)
           if form.is_valid():
                form.save()
                return redirect('/kompetenzen')

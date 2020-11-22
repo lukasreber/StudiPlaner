@@ -81,9 +81,11 @@
           Abgeschlossene Credits: {{values.credits}}<br>
           Min Credits: {{values.min}}<br>
           Maximal Credits: {{values.max}}<br>
+          Aktuell eingeschrieben: {{values.creditscurrent}}<br>
           <div class="progress">
             <div class="progress-bar bg-success" role="progressbar" style="width: {{values.percentdone}}%"></div>
-            <div class="progress-bar bg-primary" role="progressbar" style="width: {{values.percentleft}}%"></div>
+            <div class="progress-bar bg-primary" role="progressbar" style="width: {{values.percentcurrent}}%"></div>
+            <div class="progress-bar bg-secondary" role="progressbar" style="width: {{values.percentleft}}%"></div>
           </div>
         </div>
         {% endfor %}

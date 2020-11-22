@@ -6,7 +6,7 @@ from django.db.models import Sum
 
 def percent(n,m):
      if n and m:
-          return n/m*100
+          return int(n/m*100)
      else:
           return 0
 
@@ -26,19 +26,40 @@ def home(request):
      groups = course_group.objects.all()
      dic = {}
      for group in groups:
-          gn = group.name
+          gn             = group.name
           # completed credits
-          c = course.objects.filter(group__name=gn,done=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
-          # percentage done and min percentage left
-          if type(c) != int:
-               pd = 0
-               pl = percent(group.mincredits,group.maxcredits)
+          c              = course.objects.filter(group__name=gn,done=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
+          # currenty signed up credits
+          cc             = course.objects.filter(group__name=gn,semester__current=True).aggregate(sumcredits=Sum('credits'))['sumcredits']
+          
+          # if nothing is returned, change values to zero
+          if c is None:
+               c = 0
+          if cc is None:
+               cc = 0
+
+          # percentage done, min percentage left, and signed up percentage
+          if c+cc < group.mincredits:
+               pd        = percent(c,group.maxcredits)
+               pl        = percent(group.mincredits-c-cc,group.maxcredits)
+               pc        = percent(cc,group.maxcredits)
           else:
-               pd = c/group.maxcredits*100
-               pl = percent(group.mincredits-c,group.maxcredits)
+               pd        = percent(c,group.maxcredits)
+               pl        = 0
+               pc        = percent(cc,group.maxcredits)
+
+          
           
           # adding values to dictionary
-          dic[gn] = {'credits':c,'max':group.maxcredits,'min':group.mincredits,'percentdone':pd,'percentleft':pl}
+          dic[gn] = {
+               'credits':c,
+               'max':group.maxcredits,
+               'min':group.mincredits,
+               'percentdone':pd,
+               'percentleft':pl,
+               'creditscurrent':cc,
+               'percentcurrent':pc
+               }
      
      context = {
           'totalcoursegroups':totalcoursegroups,
@@ -108,20 +129,26 @@ def report(request, name):
           bosum = course.objects.filter(semester__current=True,type__name='Basismodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
           po = course.objects.filter(semester__current=True,type__name='Portfoliomodul').count()
           posum = course.objects.filter(semester__current=True,type__name='Portfoliomodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+          cp = course.objects.filter(semester__current=True,type__name='Challenge- / Projektmodul').count()
+          cpsum = course.objects.filter(semester__current=True,type__name='Challenge- / Projektmodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
      elif name == "last":
           co = course.objects.filter(semester__previous=True)
           so = course_semester.objects.get(previous=True)
-          bo = course.objects.filter(semester__current=True,type__name='Basismodul').count()
-          bosum = course.objects.filter(semester__current=True,type__name='Basismodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
-          po = course.objects.filter(semester__current=True,type__name='Portfoliomodul').count()
-          posum = course.objects.filter(semester__current=True,type__name='Portfoliomodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+          bo = course.objects.filter(semester__previous=True,type__name='Basismodul').count()
+          bosum = course.objects.filter(semester__previous=True,type__name='Basismodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+          po = course.objects.filter(semester__previous=True,type__name='Portfoliomodul').count()
+          posum = course.objects.filter(semester__previous=True,type__name='Portfoliomodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+          cp = course.objects.filter(semester__previous=True,type__name='Challenge- / Projektmodul').count()
+          cpsum = course.objects.filter(semester__previous=True,type__name='Challenge- / Projektmodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
      else:
           co = course.objects.all()
           so = course_semester.objects.all()
-          bo = course.objects.filter(semester__current=True,type__name='Basismodul').count()
-          bosum = course.objects.filter(semester__current=True,type__name='Basismodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
-          po = course.objects.filter(semester__current=True,type__name='Portfoliomodul').count()
-          posum = course.objects.filter(semester__current=True,type__name='Portfoliomodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+          bo = course.objects.filter(type__name='Basismodul').count()
+          bosum = course.objects.filter(type__name='Basismodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+          po = course.objects.filter(type__name='Portfoliomodul').count()
+          posum = course.objects.filter(type__name='Portfoliomodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
+          cp = course.objects.filter(type__name='Challenge- / Projektmodul').count()
+          cpsum = course.objects.filter(type__name='Challenge- / Projektmodul').aggregate(sumcredits=Sum('credits'))['sumcredits']
 
      coursetotal = 0
      creditstotal = 0
@@ -136,6 +163,8 @@ def report(request, name):
                'bo':bo,
                'bosum':bosum,
                'po':po,
-               'posum':posum
+               'posum':posum,
+               'cp':cp,
+               'cpsum':cpsum
                }
      return render(request, 'kompetenzen/report.html', context)

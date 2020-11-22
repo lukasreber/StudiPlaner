@@ -93,7 +93,6 @@ def courseinsert(request):
           if form.is_valid():
                form.save()
                return redirect('/kompetenzen')
-     
      context = {'form':form}
      return render(request, 'kompetenzen/courseform.html', context)
 

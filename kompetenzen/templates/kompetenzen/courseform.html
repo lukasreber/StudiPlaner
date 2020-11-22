@@ -20,6 +20,13 @@
       {% endfor %}
       <input type="submit" class="btn btn-primary" name="submit">
   </form>
+
+  {% for error in form.shortname.errors %}
+  <br>
+  <div class="alert alert-danger" role="alert">
+    {{ error }} 
+  </div>
+  {% endfor %}
   </div>
 </main>
 

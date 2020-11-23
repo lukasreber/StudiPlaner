@@ -1,63 +1,53 @@
-{% extends 'kompetenzen/main.html' %}
-
-{% block content %}
+{% extends 'kompetenzen/main.html' %} {% block content %}
 
 
 <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Report</h1>
-  </div>
-
-  <div class="table-responsive">
-    <table class="table table-striped table-sm">
-      <thead class="table-light">
-        <tr>
-          <th>Kürzel</th>
-          <th>Name</th>
-          <th>Typ</th>
-          <th>Gruppe</th>
-          <th>Credits</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for i in course %}
-        <tr>
-          <td><a href="{% url 'coursedetail'  i.id %}">{{i.shortname}}</a></td>
-          <td>{{i.name}}</td>
-          <td>{{i.type}}</td>
-          <td>{{i.group}}</td>
-          <td>{{i.credits}}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h4 class="h4">Zusammenfassung</h4>
+        <h2 class="h2">Report</h2>
     </div>
-    <div>
-      <p>
-        Anzahl Kompetenzen: <b>{{coursetotal}}</b><br>
-        Anzahl Credits: <b>{{creditstotal}}</b><br><br>
-        Anzahl Basiskompetenzen: <b>{{bo}}</b><br>
-        Credits Basiskompetenzen: <b>{{bosum}}</b><br><br>
-        Anzahl Portfoliokompetenzen: <b>{{po}}</b><br>
-        Credits Portfoliokompetenzen: <b>{{posum}}</b><br><br>
-        Anzahl Challenge / Projekte: <b>{{cp}}</b><br>
-        Credits Challenge / Projekte: <b>{{cpsum}}</b>
-      </p>
-    </div>
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h4 class="h4">Termine</h4>
-    </div>
-    <div>
-        <p>Semester Start: <b>{{semester.start}}</b><br>
-        Semester Ende: <b>{{semester.end}}</b></p>
-        <div class="alert alert-danger" role="alert">
-            Prüfungswochen von <b>{{semester.start_exam}}</b> bis <b>{{semester.end_exam}}</b>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>Kürzel</th>
+                    <th>Name</th>
+                    <th>Typ</th>
+                    <th>Gruppe</th>
+                    <th>Credits</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in course %}
+                <tr>
+                    <td><a href="{% url 'coursedetail'  i.id %}">{{i.shortname}}</a></td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.type}}</td>
+                    <td>{{i.group}}</td>
+                    <td>{{i.credits}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h4 class="h4">Zusammenfassung</h4>
+        </div>
+        <div>
+            <p>
+                Anzahl Kompetenzen: <b>{{coursetotal}}</b><br> Anzahl Credits: <b>{{creditstotal}}</b><br><br> Anzahl Basiskompetenzen: <b>{{bo}}</b><br> Credits Basiskompetenzen: <b>{{bosum}}</b><br><br> Anzahl Portfoliokompetenzen: <b>{{po}}</b><br>                Credits Portfoliokompetenzen: <b>{{posum}}</b><br><br> Anzahl Challenge / Projekte: <b>{{cp}}</b><br> Credits Challenge / Projekte: <b>{{cpsum}}</b>
+            </p>
+        </div>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h4 class="h4">Termine</h4>
+        </div>
+        <div>
+            <p>Semester Start: <b>{{semester.start}}</b><br> Semester Ende: <b>{{semester.end}}</b></p>
+            <div class="alert alert-danger" role="alert">
+                Prüfungswochen von <b>{{semester.start_exam}}</b> bis <b>{{semester.end_exam}}</b>
+            </div>
         </div>
     </div>
-  </div>
 </main>
 
 {% endblock %}

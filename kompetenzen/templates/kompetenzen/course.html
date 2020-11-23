@@ -1,51 +1,49 @@
-{% extends 'kompetenzen/main.html' %}
-
-{% block content %}
+{% extends 'kompetenzen/main.html' %} {% block content %}
 
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Kompetenz Details</h1>
-  </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h2">Kompetenz Details</h2>
+    </div>
 
-  <div class="table-responsive">
-    <table class="table table-striped table-sm">
-      <thead>
-        <tr>
-          <td>Name</td>
-          <td>{{course.name}}</td>
-        </tr>
-        <tr>
-          <td>Kürzel</td>
-          <td>{{course.shortname}}</td>
-        </tr>
-        <tr>
-          <td>Typ</td>
-          <td>{{course.type}}</td>
-        </tr>
-        <tr>
-          <td>Kompetenzgruppe</td>
-          <td>{{course.group}}</td>
-        </tr>
-        <tr>
-          <td>Credits</td>
-          <td>{{course.credits}}</td>
-        </tr>
-        <tr>
-          <td>Link</td>
-          <td><a href="{{course.link}}" target="_blank">{{course.link}}</a></td>
-        </tr>
-        <tr>
-          <td>Eingeschrieben im</td>
-          <td>{{course.semester}}</td>
-        </tr>
-        <tr>
-          <td>Abgeschlossen</td>
-          <td>{{course.done}}</td>
-        </tr>
-      </thead>
-    </table>
-  </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>{{course.name}}</td>
+                </tr>
+                <tr>
+                    <td>Kürzel</td>
+                    <td>{{course.shortname}}</td>
+                </tr>
+                <tr>
+                    <td>Typ</td>
+                    <td>{{course.type}}</td>
+                </tr>
+                <tr>
+                    <td>Kompetenzgruppe</td>
+                    <td>{{course.group}}</td>
+                </tr>
+                <tr>
+                    <td>Credits</td>
+                    <td>{{course.credits}}</td>
+                </tr>
+                <tr>
+                    <td>Link</td>
+                    <td><a href="{{course.link}}" target="_blank">{{course.link}}</a></td>
+                </tr>
+                <tr>
+                    <td>Eingeschrieben im</td>
+                    <td>{{course.semester}}</td>
+                </tr>
+                <tr>
+                    <td>Abgeschlossen</td>
+                    <td>{{course.done}}</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </main>
 
 {% endblock %}

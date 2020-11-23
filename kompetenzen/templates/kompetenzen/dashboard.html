@@ -1,97 +1,91 @@
-{% extends 'kompetenzen/main.html' %}
-
-{% block content %}
+{% extends 'kompetenzen/main.html' %} {% block content %}
 
 <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Dashboard</h1>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <h5 class="card-header">Übersicht</h5>
-        <div class="card-body">
-          <table class="table table-borderless text-center">
-            <tr>
-              <td>
-                <h2 class="display-2">{{totalcourses}}</h2>
-              </td>
-              <td>
-                <h2 class="display-2">{{totalcoursegroups}}</h2>
-              </td>
-              <td>
-                <h2 class="display-2">{{totalcredits}}</h2>
-              </td>
-            </tr>
-            <tr>
-              <td>Kompetenzen</td>
-              <td>Kompetenzgruppen</td>
-              <td>Total Credits</td>
-            </tr>
-          </table>
-        </div>
-      </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h2">Dashboard</h2>
     </div>
-
-    <div class="col">
-      <div class="card">
-        <h5 class="card-header">Fortschritt</h5>
-        <div class="card-body">
-          <table class="table">
-            <thead class="table-light">
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">Kompetenzen</th>
-                <th scope="col">Credits</th>
-              </tr>
-            </thead>
-            <tr>
-              <td>
-                <p class="h6"><span class="badge badge-success">Abgeschlossen</span></p>
-              </td>
-              <td>{{coursesdone}}</td>
-              <td>{{creditsdone}}</td>
-            </tr>
-            <tr>
-              <td>
-                <p class="h6"><span class="badge badge-primary">Eingeschrieben</span></p>
-              </td>
-              <td>{{signedup}}</td>
-              <td>{{creditssignedup}}</td>
-            </tr>
-          </table><br>
-          <div class="progress" style="height:30px">
-            <div class="progress-bar bg-success" role="progressbar" style="width: {{perccoursesdone}}%">
-              {{perccoursesdone}}%</div>
-            <div class="progress-bar bg-primary" role="progressbar" style="width: {{persignedup}}%">{{persignedup}}%
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <h5 class="card-header">Übersicht</h5>
+                <div class="card-body">
+                    <table class="table table-borderless text-center">
+                        <tr>
+                            <td>
+                                <h2 class="display-2">{{totalcourses}}</h2>
+                            </td>
+                            <td>
+                                <h2 class="display-2">{{totalcoursegroups}}</h2>
+                            </td>
+                            <td>
+                                <h2 class="display-2">{{totalcredits}}</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Kompetenzen</td>
+                            <td>Kompetenzgruppen</td>
+                            <td>Total Credits</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-          </div><br>
         </div>
-      </div>
-    </div>
-  </div>
-  <p></p>
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <h5 class="card-header">Kompetenzgruppen</h5>
-        {% for key,values in dic.items %}
-        <div class="card-body">
-          <b>{{key}}</b><br>
-          Abgeschlossene Credits: {{values.credits}}<br>
-          Min Credits: {{values.min}}<br>
-          Maximal Credits: {{values.max}}<br>
-          Aktuell eingeschrieben: {{values.creditscurrent}}<br>
-          <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" style="width: {{values.percentdone}}%"></div>
-            <div class="progress-bar bg-primary" role="progressbar" style="width: {{values.percentcurrent}}%"></div>
-            <div class="progress-bar bg-secondary" role="progressbar" style="width: {{values.percentleft}}%"></div>
-          </div>
+
+        <div class="col">
+            <div class="card">
+                <h5 class="card-header">Fortschritt</h5>
+                <div class="card-body">
+                    <table class="table">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Kompetenzen</th>
+                                <th scope="col">Credits</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                                <p class="h6"><span class="badge badge-success">Abgeschlossen</span></p>
+                            </td>
+                            <td>{{coursesdone}}</td>
+                            <td>{{creditsdone}}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="h6"><span class="badge badge-primary">Eingeschrieben</span></p>
+                            </td>
+                            <td>{{signedup}}</td>
+                            <td>{{creditssignedup}}</td>
+                        </tr>
+                    </table><br>
+                    <div class="progress" style="height:30px">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{perccoursesdone}}%">
+                            {{perccoursesdone}}%</div>
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{persignedup}}%">{{persignedup}}%
+                        </div>
+                    </div><br>
+                </div>
+            </div>
         </div>
-        {% endfor %}
-      </div>
     </div>
-  </div>
+    <p></p>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <h5 class="card-header">Kompetenzgruppen</h5>
+                {% for key,values in dic.items %}
+                <div class="card-body">
+                    <b>{{key}}</b><br> Abgeschlossene Credits: {{values.credits}}<br> Min Credits: {{values.min}}<br> Maximal Credits: {{values.max}}<br> Aktuell eingeschrieben: {{values.creditscurrent}}<br>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{values.percentdone}}%"></div>
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{values.percentcurrent}}%"></div>
+                        <div class="progress-bar bg-secondary" role="progressbar" style="width: {{values.percentleft}}%"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </main>
 
 {% endblock %}

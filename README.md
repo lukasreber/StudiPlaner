@@ -35,3 +35,13 @@ Virtual Environment aktivieren
 Testausführung mit pytest
 
     pytest
+
+## User Management
+
+Admin erstellen
+
+    python manage.py createsuperuser
+
+Passwort zurücksetzen
+
+    python manage.py changepassword <username>

@@ -4,9 +4,6 @@ from django.urls import reverse
 from kompetenzen.models import *
 from kompetenzen.views import *
 
-def test_always_passes():
-    assert True
-
 @pytest.mark.django_db
 def test_dashboard_view(client):
     url = reverse("home")

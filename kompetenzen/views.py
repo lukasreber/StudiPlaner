@@ -4,8 +4,8 @@ from .models import *
 from .forms import CourseForm
 from django.db.models import Sum
 
-def percent(n,m):
-     if n and m:
+def percent(n=False,m=False):
+     if isinstance(n,int) and isinstance(m,int) and m > 0:
           return int(n/m*100)
      else:
           return 0
